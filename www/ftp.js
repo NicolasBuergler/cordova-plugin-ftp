@@ -54,11 +54,11 @@ function Ftp() {}
  * @param {function} successCallback The success callback. If triggered, means success.
  * @param {function} errorCallback The error callback. If triggered, means init fail.
  */
-Ftp.prototype.setSecurity = function(ftpsType, successCallback, errorCallback) {
+Ftp.prototype.setSecurity = function(ftpsType, hostname, successCallback, errorCallback) {
     exec(successCallback,
         errorCallback,
         "Ftp",
-        "setSecurity", [ftpsType]);
+        "setSecurity", [ftpsType, hostname]);
 };
 
 /**

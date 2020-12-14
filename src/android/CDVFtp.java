@@ -56,6 +56,16 @@ public class CDVFtp extends CordovaPlugin {
                     }
                 }
             });
+		else if (action.equals("setSecurity")) {
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    try {
+                        setSecurity(args.getString(0), callbackContext);
+                    } catch (Exception e) {
+                        callbackContext.error(e.toString());
+                    }
+                }
+            });
         } else if (action.equals("list")) {
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {

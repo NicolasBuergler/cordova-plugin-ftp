@@ -56,7 +56,7 @@ public class CDVFtp extends CordovaPlugin {
                     }
                 }
             });
-		}else if (action.equals("setSecurity")) {
+		} else if (action.equals("setSecurity")) {
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     try {
@@ -176,6 +176,7 @@ public class CDVFtp extends CordovaPlugin {
                     break;
             }
             try {
+                this.client = new FTPClient();
                 this.client.setSecurity(securityType);
                 callbackContext.success("Set ftp security type OK");
             } catch (Exception e) {
@@ -198,7 +199,9 @@ public class CDVFtp extends CordovaPlugin {
             }
 
             try {
-                this.client = new FTPClient();
+                if(this.client == null){
+                    this.client = new FTPClient();
+                }
                 String[] address = hostname.split(":");
                 if (address.length == 2) {
                     String host = address[0];

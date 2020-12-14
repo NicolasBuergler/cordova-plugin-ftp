@@ -56,7 +56,7 @@ public class CDVFtp extends CordovaPlugin {
                     }
                 }
             });
-		else if (action.equals("setSecurity")) {
+		}else if (action.equals("setSecurity")) {
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     try {

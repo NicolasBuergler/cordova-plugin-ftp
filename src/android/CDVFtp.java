@@ -169,25 +169,25 @@ public class CDVFtp extends CordovaPlugin {
         else
         {
 
-            // TrustManager[] trustManager = new TrustManager[] { new X509TrustManager() {
-            //     public X509Certificate[] getAcceptedIssuers() {
-            //         return null;
-            //     }
-            //     public void checkClientTrusted(X509Certificate[] certs, String authType) {
-            //     }
-            //     public void checkServerTrusted(X509Certificate[] certs, String authType) {
-            //     }
-            // } };
+            TrustManager[] trustManager = new TrustManager[] { new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            } };
 
             try {
-                // SSLContext sslContext = null;
+                SSLContext sslContext = null;
 
-	            // sslContext = SSLContext.getInstance("TLS");
-	            // sslContext.init(null, trustManager, new SecureRandom());
-                // SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+	            sslContext = SSLContext.getInstance("TLS");
+	            sslContext.init(null, trustManager, new SecureRandom());
+                SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
                 this.client = new FTPClient();
-                // client.setSSLSocketFactory(sslSocketFactory);
+                client.setSSLSocketFactory(sslSocketFactory);
 
                 int securityType = 0;
             switch (ftpsType) {

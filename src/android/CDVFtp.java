@@ -162,7 +162,14 @@ public class CDVFtp extends CordovaPlugin {
         else
         {
             try {
+                SSLContext sslContext = null;
+
+	            sslContext = SSLContext.getInstance("TLS");
+	            sslContext.init(null, trustManager, new SecureRandom());
+                SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
                 this.client = new FTPClient();
+                client.setSSLSocketFactory(sslSocketFactory);
 
                 int securityType = 0;
             switch (ftpsType) {
@@ -172,11 +179,11 @@ public class CDVFtp extends CordovaPlugin {
                     break;
                 case "FTPS":
                     securityType = 1;
-                    this.client.setSecurity(FTPClient.SECURITY_FTPS);
+                    this.client.setSecurity(FTPClient.SECURITY_FTP);
                     break;
                 case "FTPES":
                     securityType = 2;
-                    this.client.setSecurity(FTPClient.SECURITY_FTPES);
+                    this.client.setSecurity(FTPClient.SECURITY_FTP);
                     break;
                 default:
                     break;

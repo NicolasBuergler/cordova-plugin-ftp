@@ -43,7 +43,6 @@ public class CDVFtp extends CordovaPlugin {
     public static final String TAG = CDVFtp.class.getSimpleName();
     private String rootPath = "/";
     private FTPClient client = null;
-    private int securityType = 0;
 
     @Override
     public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -162,6 +161,7 @@ public class CDVFtp extends CordovaPlugin {
         }
         else
         {
+            int securityType = 0;
             switch (ftpsType) {
                 case "FTP":
                     securityType = 0;
@@ -175,7 +175,14 @@ public class CDVFtp extends CordovaPlugin {
                 default:
                     break;
             }
-            callbackContext.success("Set ftp security type OK");
+            try {
+                this.client = new FTPClient();
+
+                this.client.setSecurity(securityType);
+                callbackContext.success("Set ftp security type OK");
+            } catch (Exception e) {
+                callbackContext.error(e.toString());
+            }
         }
     }
 
@@ -193,18 +200,15 @@ public class CDVFtp extends CordovaPlugin {
             }
 
             try {
-                this.client = new FTPClient();
-    
-                this.client.setSecurity(securityType);
-
-                String[] address = hostname.split(":");
-                if (address.length == 2) {
-                    String host = address[0];
-                    int port = Integer.parseInt(address[1]);
-                    this.client.connect(host, port);
-                } else {
-                    this.client.connect(hostname);
-                }
+                    this.client = new FTPClient();
+                    String[] address = hostname.split(":");
+                    if (address.length == 2) {
+                        String host = address[0];
+                        int port = Integer.parseInt(address[1]);
+                        this.client.connect(host, port);
+                    } else {
+                        this.client.connect(hostname);
+                    }
 
                 this.client.login(username, password);
                 callbackContext.success("Connect and login OK.");

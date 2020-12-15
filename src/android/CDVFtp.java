@@ -200,9 +200,9 @@ public class CDVFtp extends CordovaPlugin {
             }
 
             try {
-                if(this.client == null){
-                    this.client = new FTPClient();
-                }
+                // if(this.client == null){
+                //     this.client = new FTPClient();
+                // }
 
                 String[] address = hostname.split(":");
                 if (address.length == 2) {

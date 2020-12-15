@@ -38,6 +38,7 @@ import android.util.Log;
 import it.sauronsoftware.ftp4j.FTPClient;
 import it.sauronsoftware.ftp4j.FTPDataTransferListener;
 import it.sauronsoftware.ftp4j.FTPFile;
+import sun.net.ftp.FtpClient;
 
 public class CDVFtp extends CordovaPlugin {
     public static final String TAG = CDVFtp.class.getSimpleName();
@@ -200,7 +201,10 @@ public class CDVFtp extends CordovaPlugin {
             }
 
             try {
-                    this.client = new FTPClient();
+                    if(this.client == null){
+                        this.client = new FtpClient();
+                    }
+                    
                     String[] address = hostname.split(":");
                     if (address.length == 2) {
                         String host = address[0];

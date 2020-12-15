@@ -60,7 +60,7 @@ public class CDVFtp extends CordovaPlugin {
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     try {
-                        setSecurity(args.getString(0), args.getString(1), callbackContext);
+                        setSecurity(args.getString(0), callbackContext);
                     } catch (Exception e) {
                         callbackContext.error(e.toString());
                     }
@@ -154,7 +154,7 @@ public class CDVFtp extends CordovaPlugin {
         return true;
     }
 
-    private void setSecurity(String ftpsType, String hostname, CallbackContext callbackContext) {
+    private void setSecurity(String ftpsType, CallbackContext callbackContext) {
         if (ftpsType == null)
         {
             callbackContext.error("Expected ftp security type.");
@@ -177,7 +177,6 @@ public class CDVFtp extends CordovaPlugin {
             }
             try {
                 this.client = new FTPClient();
-
                 this.client.setSecurity(securityType);
                 callbackContext.success("Set ftp security type OK");
             } catch (Exception e) {
@@ -203,7 +202,6 @@ public class CDVFtp extends CordovaPlugin {
                 if(this.client == null){
                     this.client = new FTPClient();
                 }
-
                 String[] address = hostname.split(":");
                 if (address.length == 2) {
                     String host = address[0];
@@ -212,7 +210,6 @@ public class CDVFtp extends CordovaPlugin {
                 } else {
                     this.client.connect(hostname);
                 }
-
                 this.client.login(username, password);
                 callbackContext.success("Connect and login OK.");
             } catch (Exception e) {

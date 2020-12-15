@@ -186,7 +186,7 @@ public class CDVFtp extends CordovaPlugin {
 	            // sslContext.init(null, trustManager, new SecureRandom());
                 // SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
-                // this.client = new FTPClient();
+                this.client = new FTPClient();
                 // client.setSSLSocketFactory(sslSocketFactory);
 
                 int securityType = 0;

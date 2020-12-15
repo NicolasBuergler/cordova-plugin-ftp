@@ -43,6 +43,7 @@ public class CDVFtp extends CordovaPlugin {
     public static final String TAG = CDVFtp.class.getSimpleName();
     private String rootPath = "/";
     private FTPClient client = null;
+    private int securityType = 0;
 
     @Override
     public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -161,7 +162,6 @@ public class CDVFtp extends CordovaPlugin {
         }
         else
         {
-            int securityType = 0;
             switch (ftpsType) {
                 case "FTP":
                     securityType = 0;
@@ -175,14 +175,7 @@ public class CDVFtp extends CordovaPlugin {
                 default:
                     break;
             }
-            try {
-                this.client = new FTPClient();
-
-                this.client.setSecurity(securityType);
-                callbackContext.success("Set ftp security type OK");
-            } catch (Exception e) {
-                callbackContext.error(e.toString());
-            }
+            callbackContext.success("Set ftp security type OK");
         }
     }
 
@@ -200,9 +193,9 @@ public class CDVFtp extends CordovaPlugin {
             }
 
             try {
-                if(this.client == null){
-                    this.client = new FTPClient();
-                }
+                this.client = new FTPClient();
+    
+                this.client.setSecurity(securityType);
 
                 String[] address = hostname.split(":");
                 if (address.length == 2) {

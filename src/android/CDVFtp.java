@@ -178,15 +178,6 @@ public class CDVFtp extends CordovaPlugin {
             try {
                 this.client = new FTPClient();
 
-                String[] address = hostname.split(":");
-                if (address.length == 2) {
-                    String host = address[0];
-                    int port = Integer.parseInt(address[1]);
-                    this.client.connect(host, port);
-                } else {
-                    this.client.connect(hostname);
-                }
-
                 this.client.setSecurity(securityType);
                 callbackContext.success("Set ftp security type OK");
             } catch (Exception e) {
@@ -211,15 +202,15 @@ public class CDVFtp extends CordovaPlugin {
             try {
                 if(this.client == null){
                     this.client = new FTPClient();
+                }
 
-                    String[] address = hostname.split(":");
-                    if (address.length == 2) {
-                        String host = address[0];
-                        int port = Integer.parseInt(address[1]);
-                        this.client.connect(host, port);
-                    } else {
-                        this.client.connect(hostname);
-                    }
+                String[] address = hostname.split(":");
+                if (address.length == 2) {
+                    String host = address[0];
+                    int port = Integer.parseInt(address[1]);
+                    this.client.connect(host, port);
+                } else {
+                    this.client.connect(hostname);
                 }
 
                 this.client.login(username, password);

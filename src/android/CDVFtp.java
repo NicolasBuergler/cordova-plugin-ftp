@@ -197,11 +197,11 @@ public class CDVFtp extends CordovaPlugin {
                     break;
                 case "FTPS":
                     securityType = 1;
-                    this.client.setSecurity(FTPClient.SECURITY_FTP);
+                    this.client.setSecurity(FTPClient.SECURITY_FTPS);
                     break;
                 case "FTPES":
                     securityType = 2;
-                    this.client.setSecurity(FTPClient.SECURITY_FTP);
+                    this.client.setSecurity(FTPClient.SECURITY_FTPES);
                     break;
                 default:
                     break;

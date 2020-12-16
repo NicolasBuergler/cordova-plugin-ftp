@@ -169,25 +169,21 @@ public class CDVFtp extends CordovaPlugin {
         else
         {
 
-            TrustManager[] trustManager = new TrustManager[] { new X509TrustManager() {
-                public X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
-                public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                }
-                public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                }
-            } };
+            TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager()
+                {
+                    @Override
+                    public X509Certificate[] getAcceptedIssuers(){return null;}
+                    @Override
+                    public void checkClientTrusted(X509Certificate[] certs, String authType){}
+                    @Override
+                    public void checkServerTrusted(X509Certificate[] certs, String authType){}
+                }};
 
             try {
-                SSLContext sslContext = null;
-
-	            sslContext = SSLContext.getInstance("TLS");
-	            sslContext.init(null, trustManager, new SecureRandom());
-                SSLSocketFactory sslSocketFactory = javax.net.ssl.SSLSocketFactory.getDefault();
-
+                SSLContext sc = SSLContext.getInstance("TLS");
+                sc.init(null, trustAllCerts, new SecureRandom());
                 this.client = new FTPClient();
-                client.setSSLSocketFactory(sslSocketFactory);
+                this.client.setSSLSocketFactory(sc.getSocketFactory());
 
                 int securityType = 0;
             switch (ftpsType) {
@@ -197,7 +193,7 @@ public class CDVFtp extends CordovaPlugin {
                     break;
                 case "FTPS":
                     securityType = 1;
-                    this.client.setSecurity(FTPClient.SECURITY_FTPS);
+                    this.client.setSecurity(FTPClient.SECURITY_FTPES);
                     break;
                 case "FTPES":
                     securityType = 2;
